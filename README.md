@@ -9,3 +9,7 @@
 - Play slide(text/image) animation in user viewpoint
 - Count numeric up
 - Add more image
+
+## Note
+
+Waiting for the other file
