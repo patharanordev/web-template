@@ -1,7 +1,7 @@
 # Web Template
 
 ## Using library
-- [Bootstrap](http://getbootstrap.com/getting-started/)
+- [Bootstrap - bootstrap-3.3.6](http://getbootstrap.com/getting-started/)
 - [CountUp.js](https://inorganik.github.io/countUp.js/)
 
 ## Feature
