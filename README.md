@@ -2,8 +2,9 @@
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=A8YE92K9QM7NA)
 
 ## Using library
-- [Bootstrap - bootstrap-3.3.6](http://getbootstrap.com/getting-started/)
-- [CountUp.js](https://inorganik.github.io/countUp.js/)
+- [x] [Bootstrap - bootstrap-3.3.6](http://getbootstrap.com/getting-started/)
+- [x] [CountUp.js](https://inorganik.github.io/countUp.js/)
+- [x] [dynamics.js](http://dynamicsjs.com/)
 
 ## Feature
 
