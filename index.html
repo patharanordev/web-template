@@ -29,6 +29,9 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+
+    <link href="./css/speaker.css" rel="stylesheet">
   </head>
 
   <body>
@@ -53,6 +56,20 @@
             </p>
           </div>
 
+          <section id="speaker">
+            <nav style="opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);">
+              <ul>
+                <li style="opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);">Checkout</li>
+                <li style="opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);">Subscriptions</li>
+                <li style="opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);">Connect</li>
+                <li style="opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);">Apple Pay</li>
+                <li style="opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);">Android Pay</li>
+                <li style="opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);">Bitcoin</li>
+                <li style="opacity: 1; transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);">Gallery</li>
+              </ul>
+            </nav>
+          </section>
+
           <div class="mastfoot">
             <div class="inner">
               <p>Cover template for <a href="http://getbootstrap.com">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
@@ -73,5 +90,63 @@
     <script src="./dist/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="./assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="./js/dynamics.js"></script>
+    <script>
+      var nav = document.querySelector('nav')
+      var items = document.querySelectorAll('li')
+
+      function show() {
+        // Animate the popover
+        dynamics.animate(nav, {
+          opacity: 1,
+          scale: 1
+        }, {
+          type: dynamics.spring,
+          frequency: 200,
+          friction: 270,
+          duration: 800
+        })
+
+        // Animate each line individually
+        for(var i=0; i<items.length; i++) {
+          var item = items[i]
+          // Define initial properties
+          dynamics.css(item, {
+            opacity: 0,
+            translateY: 20
+          })
+
+          // Animate to final properties
+          dynamics.animate(item, {
+            opacity: 1,
+            translateY: 0
+          }, {
+            type: dynamics.spring,
+            frequency: 300,
+            friction: 435,
+            duration: 1000,
+            delay: 100 + i * 40
+          })
+        }
+
+        dynamics.setTimeout(hide, 2000)
+      }
+
+      function hide() {
+        // Animate the popover
+        dynamics.animate(nav, {
+          opacity: 0,
+          scale: .1
+        }, {
+          type: dynamics.easeInOut,
+          duration: 300,
+          friction: 100
+        })
+
+        dynamics.setTimeout(show, 1000)
+      }
+
+      show()
+    </script>
   </body>
 </html>
