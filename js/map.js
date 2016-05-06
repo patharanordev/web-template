@@ -7,6 +7,12 @@
       zoom: 12
   });
 
+  var map_bg = L.map('map', {
+      zoomControl: false,
+      center: [39.583,2.670],
+      zoom: 12
+  });
+
   var basemap = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
   }).addTo(map_bg);
@@ -18,6 +24,7 @@
   //     //cartocss: '#layer{polygon-fill: #D6301D;polygon-opacity: 0.7;}'
   //   }
   // };
+
 
   // Empty layer
   cartodb.createLayer(map_bg,{
@@ -38,26 +45,24 @@
       //       layer.createSubLayer(layers[$(this).attr("id")]);
       //   });
       // });
-    map_bg.overlayMapTypes.setAt(1, layer);
-      var sublayer = layer.getSubLayer(0);
-      sublayer.setCartoCSS(systemcartoCSS);
+  });
 
-      layers.SystemLyr = sublayer
-      var infowindow = sublayer.infowindow
+  cartodb.createLayer(map,{
+      user_name: 'patharanor',
+      type: 'cartodb',
+      sublayers: []
+    }, 'https://patharanor.cartodb.com/api/v2/viz/adf5f1f0-12fc-11e6-8132-0e787de82d45/viz.json')
+    .addTo(map)
+    .done(function(layer){
+      // When the layers inputs change fire this
+      // $("input[name='layer']").change(function(){
 
-      infowindow.set('template', function(data) {
+      //   // Clear the sublayers
+      //   layer.getSubLayers().forEach(function(sublayer){sublayer.remove()});
 
-        var clickPosLatLng = this.model.get('latlng');
-        var fields = this.model.get('content').fields;
-
-        if (fields && fields[0].type !== 'loading') {
-
-          var obj = _.find(fields, function(obj) {
-            return obj.title == 'kml_key'
-          }).value
-
-          callinfowindow(clickPosLatLng, obj)
-
-        }
-      }); // end infowindow set
+      //   // For every check activated, add a sublayer
+      //   $.each($("input[name='layer']:checked"), function(){
+      //       layer.createSubLayer(layers[$(this).attr("id")]);
+      //   });
+      // });
   });
