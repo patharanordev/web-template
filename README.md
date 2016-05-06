@@ -5,7 +5,7 @@
 - [x] [Bootstrap - bootstrap-3.3.6](http://getbootstrap.com/getting-started/)
 - [x] [CountUp.js](https://inorganik.github.io/countUp.js/)
 - [x] [dynamics.js](http://dynamicsjs.com/)
-- [x] [CartDB](http://docs.cartodb.com/cartodb-platform/cartodb-js/getting-started/)
+- [x] [CartoDB](http://docs.cartodb.com/cartodb-platform/cartodb-js/getting-started/)
 
 ## Feature
 
