@@ -1,36 +1,63 @@
 
-cartodb.createVis('map', 'https://patharanor.cartodb.com/api/v2/viz/adf5f1f0-12fc-11e6-8132-0e787de82d45/viz.json')
-  .done(function(vis, layers) {
-    // layer 0 is the base layer, layer 1 is cartodb layer
-    // when setInteraction is disabled featureOver is triggered
-    layers[1].setInteraction(true);
-    layers[1].on('featureOver', function(e, latlng, pos, data, layerNumber) {
-      console.log(e, latlng, pos, data, layerNumber);
-    });
 
-    // you can get the native map to work with it
-    var map = vis.getNativeMap();
+  //Create the leaflet map
+  var map_bg = L.map('map_bg', {
+      zoomControl: false,
+      center: [39.583,2.670],
+      zoom: 12
+  });
 
-    // now, perform any operations you need, e.g. assuming map is a L.Map object:
-    // map.setZoom(3);
-    // map.panTo([50.5, 30.5]);
+  var basemap = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
+  }).addTo(map_bg);
 
-    cartodb.createVis('map_bg', 'https://patharanor.cartodb.com/api/v2/viz/adf5f1f0-12fc-11e6-8132-0e787de82d45/viz.json')
-      .done(function(vis_bg, layers_bg) {
-        // layer 0 is the base layer, layer 1 is cartodb layer
-        // when setInteraction is disabled featureOver is triggered
-        layers_bg[1].setInteraction(true);
-        layers_bg[1].on('featureOver', function(e_bg, latlng_bg, pos_bg, data_bg, layerNumber_bg) {
-          console.log(e_bg, latlng_bg, pos_bg, data_bg, layerNumber_bg);
-        });
+  //Layers definition
+  // var layers = {
+  //   'smartphone': {
+  //     sql: 'SELECT * FROM untitled_table'//,
+  //     //cartocss: '#layer{polygon-fill: #D6301D;polygon-opacity: 0.7;}'
+  //   }
+  // };
 
-        // you can get the native map to work with it
-        var map_bg = vis_bg.getNativeMap();
+  // Empty layer
+  cartodb.createLayer(map_bg,{
+      user_name: 'patharanor',
+      type: 'cartodb',
+      sublayers: []
+    }, 'https://patharanor.cartodb.com/api/v2/viz/adf5f1f0-12fc-11e6-8132-0e787de82d45/viz.json')
+    .addTo(map_bg)
+    .done(function(layer){
+      // When the layers inputs change fire this
+      // $("input[name='layer']").change(function(){
 
-        // now, perform any operations you need, e.g. assuming map is a L.Map object:
-        // map.setZoom(3);
-        // map.panTo([50.5, 30.5]);
+      //   // Clear the sublayers
+      //   layer.getSubLayers().forEach(function(sublayer){sublayer.remove()});
 
-        
-      });
+      //   // For every check activated, add a sublayer
+      //   $.each($("input[name='layer']:checked"), function(){
+      //       layer.createSubLayer(layers[$(this).attr("id")]);
+      //   });
+      // });
+    map_bg.overlayMapTypes.setAt(1, layer);
+      var sublayer = layer.getSubLayer(0);
+      sublayer.setCartoCSS(systemcartoCSS);
+
+      layers.SystemLyr = sublayer
+      var infowindow = sublayer.infowindow
+
+      infowindow.set('template', function(data) {
+
+        var clickPosLatLng = this.model.get('latlng');
+        var fields = this.model.get('content').fields;
+
+        if (fields && fields[0].type !== 'loading') {
+
+          var obj = _.find(fields, function(obj) {
+            return obj.title == 'kml_key'
+          }).value
+
+          callinfowindow(clickPosLatLng, obj)
+
+        }
+      }); // end infowindow set
   });
